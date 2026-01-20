@@ -1,7 +1,9 @@
 import Hero from "@/components/Hero";
 import HeroBreakImage from "@/components/HeroBreak";
 import OurStory from "@/components/OurStory";
+import ReviewsSection from "@/components/Reviews";
 import HeroSlideshow from "@/components/Slideshow";
+import Visit from "@/components/Visit";
 
 export const metadata = {
   title: "Mien Tay | Authentic Vietnamese Restaurant in Shoreditch",
@@ -18,6 +20,8 @@ export default function Home() {
       <Hero />
       <HeroBreakImage />
       <OurStory />
+      <ReviewsSection />
+      <Visit />
     </div>
   );
 }

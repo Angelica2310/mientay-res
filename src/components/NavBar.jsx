@@ -16,11 +16,11 @@ const NAV_ITEMS = [
 
 const MOBILE_PRIORITY = [
   { label: "Menu", href: "/menu" },
-  { label: "Contact", href: "/contact" },
+  { label: "Book", href: "/book" },
 ];
 
 const MOBILE_DROPDOWN_ITEMS = NAV_ITEMS.filter(
-  (item) => item.href !== "/menu" && item.href !== "/contact",
+  (item) => item.href !== "/menu" && item.href !== "/book",
 );
 
 function cx(...classes) {
@@ -30,6 +30,7 @@ function cx(...classes) {
 export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   // Close mobile menu on route change
   useEffect(() => {
@@ -44,6 +45,13 @@ export default function Navbar() {
     };
   }, [open]);
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   const items = useMemo(() => NAV_ITEMS, []);
 
   const isActive = (href) => {
@@ -52,17 +60,21 @@ export default function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50">
+    <header className="fixed left-0 right-0 top-0 z-50 w-full md:static">
       {/* Top bar */}
       <div
-        className="bg-transparent"
-        style={{ borderColor: "rgba(255,255,255,0.18)" }}
+        className="transition-colors duration-200"
+        style={{
+          backgroundColor: scrolled ? "rgba(255,255,255,0.72)" : "transparent",
+          borderColor: scrolled ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.18)",
+          backdropFilter: scrolled ? "blur(10px)" : "none",
+        }}
       >
         <nav className="mx-auto flex max-w-6xl items-center px-4 py-3 md:px-6">
           {/* Left: Logo */}
           <div className="inline-flex items-center rounded-2xl px-3 py-2">
             <img
-              src="/logo.png"
+              src={scrolled ? "/logo1.png" : "/logo.png"}
               alt="Mien Tay Vietnamese Kitchen"
               className="h-18 w-auto md:h-30"
             />
@@ -83,7 +95,9 @@ export default function Navbar() {
                         ? "rgba(255,255,255,0.22)"
                         : "rgba(255,255,255,0.12)",
                       border: "1px solid rgba(255,255,255,0.18)",
-                      color: "rgba(255,255,255,0.92)",
+                      color: scrolled
+                        ? "var(--textMain)"
+                        : "rgba(255,255,255,0.92)",
                       backdropFilter: "blur(8px)",
                     }}
                   >
@@ -108,7 +122,9 @@ export default function Navbar() {
                       ? "rgba(255,255,255,0.22)"
                       : "rgba(255,255,255,0.12)",
                     border: "1px solid rgba(255,255,255,0.18)",
-                    color: "rgba(255,255,255,0.92)",
+                    color: scrolled
+                      ? "var(--textMain)"
+                      : "rgba(255,255,255,0.92)",
                     backdropFilter: "blur(8px)",
                   }}
                 >
@@ -118,15 +134,17 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* Right: Reserve (desktop) + Burger (mobile) */}
+          {/* Right: Mobile CTA + Burger */}
           <div className="ml-auto flex items-center gap-2">
-            <Link
-              href="/reservations"
-              className="hidden rounded-xl px-4 py-2 text-sm font-semibold transition md:inline-flex"
-              style={{ backgroundColor: "var(--primary)", color: "#fff" }}
+            <a
+              href="https://deliveroo.co.uk/menu/london/haggerston/mien-tay-kingsland-road?utm_medium=affiliate&utm_source=google_maps_link&fulfillment_type=DELIVERY"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex rounded-xl px-3 py-2 text-xs font-semibold transition md:hidden"
+              style={{ backgroundColor: "#00ccbc", color: "#03363d" }}
             >
-              Reserve
-            </Link>
+              Order via Deliveroo
+            </a>
 
             <button
               type="button"
@@ -134,7 +152,7 @@ export default function Navbar() {
               style={{
                 backgroundColor: "rgba(255,255,255,0.12)",
                 border: "1px solid rgba(255,255,255,0.18)",
-                color: "rgba(255,255,255,0.92)",
+                color: scrolled ? "var(--textMain)" : "rgba(255,255,255,0.92)",
                 backdropFilter: "blur(8px)",
               }}
               aria-label={open ? "Close menu" : "Open menu"}
@@ -161,6 +179,27 @@ export default function Navbar() {
             </button>
           </div>
         </nav>
+      </div>
+
+      {/* Fixed desktop CTAs */}
+      <div className="fixed right-6 top-4 z-50 hidden items-center gap-2 md:flex">
+        <a
+          href="https://deliveroo.co.uk/menu/london/haggerston/mien-tay-kingsland-road?utm_medium=affiliate&utm_source=google_maps_link&fulfillment_type=DELIVERY"
+          target="_blank"
+          rel="noreferrer"
+          className="rounded-xl px-4 py-2 text-sm font-semibold transition"
+          style={{ backgroundColor: "#00ccbc", color: "#03363d" }}
+        >
+          Order via Deliveroo
+        </a>
+
+        <Link
+          href="/reservations"
+          className="rounded-xl px-4 py-2 text-sm font-semibold transition"
+          style={{ backgroundColor: "var(--primary)", color: "#fff" }}
+        >
+          Reserve
+        </Link>
       </div>
 
       {/* Mobile menu */}
@@ -199,17 +238,6 @@ export default function Navbar() {
                     </Link>
                   );
                 })}
-
-                <Link
-                  href="/reservations"
-                  className="mt-3 inline-flex w-full justify-center rounded-xl px-4 py-3 text-base font-semibold"
-                  style={{
-                    backgroundColor: "var(--primary)",
-                    color: "#ffffff",
-                  }}
-                >
-                  Reserve
-                </Link>
               </div>
             </div>
           </div>
