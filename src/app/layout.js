@@ -32,7 +32,9 @@ export default function RootLayout({ children }) {
       <body
         className={`${playfair.variable} ${nunito.variable} min-h-screen flex flex-col`}
       >
-        <Navbar />
+        <header className="absolute top-0 left-0 right-0 z-50">
+          <Navbar />
+        </header>
         {children}
       </body>
     </html>

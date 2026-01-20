@@ -14,6 +14,15 @@ const NAV_ITEMS = [
   { label: "Contact", href: "/contact" },
 ];
 
+const MOBILE_PRIORITY = [
+  { label: "Menu", href: "/menu" },
+  { label: "Contact", href: "/contact" },
+];
+
+const MOBILE_DROPDOWN_ITEMS = NAV_ITEMS.filter(
+  (item) => item.href !== "/menu" && item.href !== "/contact",
+);
+
 function cx(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -46,47 +55,61 @@ export default function Navbar() {
     <header className="sticky top-0 z-50">
       {/* Top bar */}
       <div
-        className="border-b"
-        style={{
-          backgroundColor: "var(--surface)",
-          borderColor: "rgba(0,0,0,0.08)",
-        }}
+        className="bg-transparent"
+        style={{ borderColor: "rgba(255,255,255,0.18)" }}
       >
-        <nav className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 md:px-6">
-          {/* Logo */}
-          <Link href="/" className="group inline-flex items-center gap-2">
-            <div
-              className="grid h-auto w-auto place-items-center"
-              aria-hidden="true"
-            >
-              <Image
-                src="/logo.png"
-                alt="logo"
-                width={180}
-                height={180}
-                priority
-              />
+        <nav className="mx-auto flex max-w-6xl items-center px-4 py-3 md:px-6">
+          {/* Left: Logo */}
+          <div className="inline-flex items-center rounded-2xl px-3 py-2">
+            <img
+              src="/logo.png"
+              alt="Mien Tay Vietnamese Kitchen"
+              className="h-18 w-auto md:h-30"
+            />
+          </div>
+
+          {/* Middle: Mobile Menu + Contact (centered) */}
+          <div className="flex flex-1 justify-center md:hidden">
+            <div className="flex items-center gap-5">
+              {MOBILE_PRIORITY.map((item) => {
+                const active = isActive(item.href);
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="rounded-full px-3 py-1.5 text-sm font-semibold transition"
+                    style={{
+                      backgroundColor: active
+                        ? "rgba(255,255,255,0.22)"
+                        : "rgba(255,255,255,0.12)",
+                      border: "1px solid rgba(255,255,255,0.18)",
+                      color: "rgba(255,255,255,0.92)",
+                      backdropFilter: "blur(8px)",
+                    }}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
             </div>
-          </Link>
+          </div>
 
           {/* Desktop links */}
-          <div className="hidden items-center gap-1 md:flex">
-            {items.map((item) => {
+          <div className="hidden flex-1 items-center justify-center gap-4 md:flex">
+            {NAV_ITEMS.map((item) => {
               const active = isActive(item.href);
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={cx(
-                    "rounded-xl px-3 py-2 text-sm font-medium transition",
-                    "hover:shadow-sm",
-                    active && "shadow-sm",
-                  )}
+                  className="rounded-full px-3 py-1.5 text-sm font-semibold transition"
                   style={{
-                    color: active ? "var(--primary)" : "var(--textMain)",
                     backgroundColor: active
-                      ? "rgba(230,198,92,0.25)"
-                      : "transparent",
+                      ? "rgba(255,255,255,0.22)"
+                      : "rgba(255,255,255,0.12)",
+                    border: "1px solid rgba(255,255,255,0.18)",
+                    color: "rgba(255,255,255,0.92)",
+                    backdropFilter: "blur(8px)",
                   }}
                 >
                   {item.label}
@@ -95,28 +118,24 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* Right actions */}
-          <div className="flex items-center gap-2">
-            {/* CTA (desktop) */}
+          {/* Right: Reserve (desktop) + Burger (mobile) */}
+          <div className="ml-auto flex items-center gap-2">
             <Link
               href="/reservations"
               className="hidden rounded-xl px-4 py-2 text-sm font-semibold transition md:inline-flex"
-              style={{
-                backgroundColor: "var(--primary)",
-                color: "#ffffff",
-              }}
+              style={{ backgroundColor: "var(--primary)", color: "#fff" }}
             >
               Reserve
             </Link>
 
-            {/* Mobile menu button */}
             <button
               type="button"
               className="inline-flex items-center justify-center rounded-xl border p-2 md:hidden"
               style={{
-                backgroundColor: "var(--background)",
-                borderColor: "rgba(0,0,0,0.10)",
-                color: "var(--textMain)",
+                backgroundColor: "rgba(255,255,255,0.12)",
+                border: "1px solid rgba(255,255,255,0.18)",
+                color: "rgba(255,255,255,0.92)",
+                backdropFilter: "blur(8px)",
               }}
               aria-label={open ? "Close menu" : "Open menu"}
               aria-expanded={open}
@@ -146,40 +165,53 @@ export default function Navbar() {
 
       {/* Mobile menu */}
       {open && (
-        <div
-          className="md:hidden"
-          style={{ backgroundColor: "var(--surface)" }}
-        >
-          <div className="mx-auto max-w-6xl space-y-1 px-4 py-4">
-            {items.map((item) => {
-              const active = isActive(item.href);
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="block rounded-xl px-4 py-3 text-base font-medium transition"
-                  style={{
-                    color: active ? "var(--primary)" : "var(--textMain)",
-                    backgroundColor: active
-                      ? "rgba(230,198,92,0.25)"
-                      : "transparent",
-                  }}
-                >
-                  {item.label}
-                </Link>
-              );
-            })}
-
-            <Link
-              href="/reservations"
-              className="mt-3 inline-flex w-full justify-center rounded-xl px-4 py-3 text-base font-semibold"
+        <div className="md:hidden">
+          <div
+            className="fixed inset-0 z-40"
+            style={{ backgroundColor: "rgba(0,0,0,0.35)" }}
+            onClick={() => setOpen(false)}
+          >
+            {/* Glass panel */}
+            <div
+              className="fixed left-0 right-0 top-[72px] z-50 mx-auto w-[92%] max-w-md overflow-hidden rounded-3xl border"
               style={{
-                backgroundColor: "var(--primary)",
-                color: "#ffffff",
+                backgroundColor: "rgba(255,255,255,0.16)",
+                borderColor: "rgba(255,255,255,0.22)",
+                backdropFilter: "blur(14px)",
               }}
             >
-              Reserve
-            </Link>
+              <div className="p-3">
+                {MOBILE_DROPDOWN_ITEMS.map((item) => {
+                  const active = isActive(item.href);
+                  return (
+                    <Link
+                      key={item.href}
+                      href={item.href}
+                      className="block rounded-xl px-4 py-3 text-base font-medium transition"
+                      style={{
+                        color: "rgba(255,255,255,0.92)",
+                        backgroundColor: active
+                          ? "rgba(230,198,92,0.25)"
+                          : "transparent",
+                      }}
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                })}
+
+                <Link
+                  href="/reservations"
+                  className="mt-3 inline-flex w-full justify-center rounded-xl px-4 py-3 text-base font-semibold"
+                  style={{
+                    backgroundColor: "var(--primary)",
+                    color: "#ffffff",
+                  }}
+                >
+                  Reserve
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       )}
