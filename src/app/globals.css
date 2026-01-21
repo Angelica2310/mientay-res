@@ -18,6 +18,18 @@ body {
   font-family: var(--font-nunito);
 }
 
+@keyframes loaderSlide {
+  0% {
+    transform: translateX(-60%);
+  }
+  50% {
+    transform: translateX(60%);
+  }
+  100% {
+    transform: translateX(-60%);
+  }
+}
+
 @layer base {
   button,
   [role="button"],
