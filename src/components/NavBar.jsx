@@ -31,10 +31,15 @@ export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [deliveryOpen, setDeliveryOpen] = useState(false);
+  const deliveryUrl =
+    "https://deliveroo.co.uk/menu/london/haggerston/mien-tay-kingsland-road?utm_medium=affiliate&utm_source=google_maps_link&fulfillment_type=DELIVERY";
+  const phoneNumber = "020 7739 3841";
 
   // Close mobile menu on route change
   useEffect(() => {
     setOpen(false);
+    setDeliveryOpen(false);
   }, [pathname]);
 
   // Lock scroll when mobile menu is open
@@ -80,9 +85,9 @@ export default function Navbar() {
             />
           </div>
 
-          {/* Middle: Mobile Menu + Contact (centered) */}
-          <div className="flex flex-1 justify-center md:hidden">
-            <div className="flex items-center gap-5">
+          {/* Middle: Mobile items (even spacing) */}
+          <div className="ml-auto flex md:hidden">
+            <div className="flex items-center justify-between gap-2">
               {MOBILE_PRIORITY.map((item) => {
                 const active = isActive(item.href);
                 return (
@@ -92,9 +97,13 @@ export default function Navbar() {
                     className="rounded-full px-3 py-1.5 text-sm font-semibold transition"
                     style={{
                       backgroundColor: active
-                        ? "rgba(255,255,255,0.22)"
-                        : "rgba(255,255,255,0.12)",
-                      border: "1px solid rgba(255,255,255,0.18)",
+                        ? "rgba(31,79,58,0.22)"
+                        : scrolled
+                          ? "rgba(31,79,58,0.16)"
+                          : "rgba(255,255,255,0.12)",
+                      border: scrolled
+                        ? "1px solid rgba(31,79,58,0.22)"
+                        : "1px solid rgba(255,255,255,0.18)",
                       color: scrolled
                         ? "var(--textMain)"
                         : "rgba(255,255,255,0.92)",
@@ -105,6 +114,124 @@ export default function Navbar() {
                   </Link>
                 );
               })}
+
+              <div className="relative">
+                <button
+                  type="button"
+                  className="rounded-full px-3 py-1.5 text-sm font-semibold transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 cursor-pointer"
+                  style={{
+                    backgroundColor: "var(--primary)",
+                    color: "#fff",
+                  }}
+                  onClick={() => setDeliveryOpen((v) => !v)}
+                  aria-expanded={deliveryOpen}
+                  aria-haspopup="menu"
+                >
+                  Delivery
+                </button>
+                {deliveryOpen && (
+                  <div
+                    className="absolute right-0 top-[46px] z-50 w-52 overflow-hidden rounded-lg border shadow-md backdrop-blur-md"
+                    style={{
+                      backgroundColor: "rgba(255,255,255,0.9)",
+                      borderColor: "rgba(0,0,0,0.08)",
+                    }}
+                  >
+                    <a
+                      href={`tel:${phoneNumber.replace(/\s/g, "")}`}
+                      className="flex items-center gap-2 px-4 py-3 text-sm font-semibold leading-5 transition-colors"
+                      style={{ color: "var(--textMain)" }}
+                    >
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M5 4h5l2 5-3 2a11 11 0 0 0 5 5l2-3 5 2v5c-8.84 0-16-7.16-16-16Z"
+                          stroke="currentColor"
+                          strokeWidth="1.6"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                      Call to Order
+                    </a>
+                    <div className="h-px w-full bg-black/10" />
+                    <a
+                      href={deliveryUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="flex items-center gap-2 px-4 py-3 text-sm font-semibold leading-5 transition-colors"
+                      style={{ color: "var(--textMain)" }}
+                    >
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M3 7h13l3 4v6H3V7Z"
+                          stroke="currentColor"
+                          strokeWidth="1.6"
+                          strokeLinejoin="round"
+                        />
+                        <path
+                          d="M16 7V5H3v2"
+                          stroke="currentColor"
+                          strokeWidth="1.6"
+                          strokeLinejoin="round"
+                        />
+                        <circle cx="7" cy="17" r="1.5" fill="currentColor" />
+                        <circle cx="17" cy="17" r="1.5" fill="currentColor" />
+                      </svg>
+                      Deliveroo
+                    </a>
+                  </div>
+                )}
+              </div>
+
+              <button
+                type="button"
+                className="inline-flex items-center justify-center rounded-xl border p-2"
+                style={{
+                  backgroundColor: scrolled
+                    ? "rgba(31,79,58,0.16)"
+                    : "rgba(255,255,255,0.12)",
+                  border: scrolled
+                    ? "1px solid rgba(31,79,58,0.22)"
+                    : "1px solid rgba(255,255,255,0.18)",
+                  color: scrolled
+                    ? "var(--textMain)"
+                    : "rgba(255,255,255,0.92)",
+                  backdropFilter: "blur(8px)",
+                }}
+                aria-label={open ? "Close menu" : "Open menu"}
+                aria-expanded={open}
+                onClick={() => setOpen((v) => !v)}
+              >
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+                  {open ? (
+                    <path
+                      d="M6 18L18 6M6 6l12 12"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  ) : (
+                    <path
+                      d="M4 7h16M4 12h16M4 17h16"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  )}
+                </svg>
+              </button>
             </div>
           </div>
 
@@ -116,7 +243,7 @@ export default function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="rounded-full px-3 py-1.5 text-sm font-semibold transition"
+                  className="rounded-full px-3 py-1.5 text-sm font-semibold transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0 active:scale-95"
                   style={{
                     backgroundColor: active
                       ? "rgba(255,255,255,0.22)"
@@ -134,68 +261,96 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* Right: Mobile CTA + Burger */}
-          <div className="ml-auto flex items-center gap-2">
-            <a
-              href="https://deliveroo.co.uk/menu/london/haggerston/mien-tay-kingsland-road?utm_medium=affiliate&utm_source=google_maps_link&fulfillment_type=DELIVERY"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex rounded-xl px-3 py-2 text-xs font-semibold transition md:hidden"
-              style={{ backgroundColor: "#00ccbc", color: "#03363d" }}
-            >
-              Order via Deliveroo
-            </a>
-
-            <button
-              type="button"
-              className="inline-flex items-center justify-center rounded-xl border p-2 md:hidden"
-              style={{
-                backgroundColor: "rgba(255,255,255,0.12)",
-                border: "1px solid rgba(255,255,255,0.18)",
-                color: scrolled ? "var(--textMain)" : "rgba(255,255,255,0.92)",
-                backdropFilter: "blur(8px)",
-              }}
-              aria-label={open ? "Close menu" : "Open menu"}
-              aria-expanded={open}
-              onClick={() => setOpen((v) => !v)}
-            >
-              <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                {open ? (
-                  <path
-                    d="M6 18L18 6M6 6l12 12"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                ) : (
-                  <path
-                    d="M4 7h16M4 12h16M4 17h16"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                )}
-              </svg>
-            </button>
-          </div>
+          {/* Right: Desktop-only spacer */}
+          <div className="ml-auto hidden items-center gap-2 md:flex" />
         </nav>
       </div>
 
       {/* Fixed desktop CTAs */}
       <div className="fixed right-6 top-4 z-50 hidden items-center gap-2 md:flex">
-        <a
-          href="https://deliveroo.co.uk/menu/london/haggerston/mien-tay-kingsland-road?utm_medium=affiliate&utm_source=google_maps_link&fulfillment_type=DELIVERY"
-          target="_blank"
-          rel="noreferrer"
-          className="rounded-xl px-4 py-2 text-sm font-semibold transition"
-          style={{ backgroundColor: "#00ccbc", color: "#03363d" }}
-        >
-          Order via Deliveroo
-        </a>
+        <div className="relative">
+          <button
+            type="button"
+            className="rounded-full px-4 py-2 text-sm font-semibold transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 cursor-pointer"
+            style={{
+              backgroundColor: "var(--accent)",
+              color: "#1b1b1b",
+            }}
+            onClick={() => setDeliveryOpen((v) => !v)}
+            aria-expanded={deliveryOpen}
+            aria-haspopup="menu"
+          >
+            Delivery
+          </button>
+          {deliveryOpen && (
+            <div
+              className="absolute right-0 top-[46px] z-50 w-56 overflow-hidden rounded-lg border shadow-md backdrop-blur-md cursor-pointer"
+              style={{
+                backgroundColor: "rgba(255,255,255,0.75)",
+                borderColor: "rgba(0,0,0,0.08)",
+              }}
+            >
+              <a
+                href={`tel:${phoneNumber.replace(/\s/g, "")}`}
+                className="flex items-center gap-2 px-4 py-3 text-sm font-semibold leading-5 transition-colors"
+                style={{ color: "var(--textMain)" }}
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M5 4h5l2 5-3 2a11 11 0 0 0 5 5l2-3 5 2v5c-8.84 0-16-7.16-16-16Z"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+                Call to Order
+              </a>
+              <div className="h-px w-full bg-black/10" />
+              <a
+                href={deliveryUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="flex items-center gap-2 px-4 py-3 text-sm font-semibold leading-5 transition-colors"
+                style={{ color: "var(--textMain)" }}
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path
+                    d="M3 7h13l3 4v6H3V7Z"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M16 7V5H3v2"
+                    stroke="currentColor"
+                    strokeWidth="1.6"
+                    strokeLinejoin="round"
+                  />
+                  <circle cx="7" cy="17" r="1.5" fill="currentColor" />
+                  <circle cx="17" cy="17" r="1.5" fill="currentColor" />
+                </svg>
+                Deliveroo
+              </a>
+            </div>
+          )}
+        </div>
 
         <Link
           href="/reservations"
-          className="rounded-xl px-4 py-2 text-sm font-semibold transition"
+          className="rounded-full px-4 py-2 text-sm font-semibold transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0 active:scale-95"
           style={{ backgroundColor: "var(--primary)", color: "#fff" }}
         >
           Reserve
@@ -214,7 +369,7 @@ export default function Navbar() {
             <div
               className="fixed left-0 right-0 top-[72px] z-50 mx-auto w-[92%] max-w-md overflow-hidden rounded-3xl border"
               style={{
-                backgroundColor: "rgba(255,255,255,0.16)",
+                backgroundColor: "rgba(255,255,255,0.45)",
                 borderColor: "rgba(255,255,255,0.22)",
                 backdropFilter: "blur(14px)",
               }}
@@ -228,9 +383,9 @@ export default function Navbar() {
                       href={item.href}
                       className="block rounded-xl px-4 py-3 text-base font-medium transition"
                       style={{
-                        color: "rgba(255,255,255,0.92)",
+                        color: "var(--textMain)",
                         backgroundColor: active
-                          ? "rgba(230,198,92,0.25)"
+                          ? "rgba(230,198,92,0.75)"
                           : "transparent",
                       }}
                     >

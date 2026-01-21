@@ -4,6 +4,7 @@ import OurStory from "@/components/OurStory";
 import ReviewsSection from "@/components/Reviews";
 import HeroSlideshow from "@/components/Slideshow";
 import Visit from "@/components/Visit";
+import BambooTable from "@/components/BambooTable";
 
 export const metadata = {
   title: "Mien Tay | Authentic Vietnamese Restaurant in Shoreditch",
@@ -18,7 +19,8 @@ export default function Home() {
         <HeroSlideshow />
       </div>
       <Hero />
-      <HeroBreakImage />
+      {/* <HeroBreakImage /> */}
+      <BambooTable />
       <OurStory />
       <ReviewsSection />
       <Visit />

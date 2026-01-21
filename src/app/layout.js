@@ -1,6 +1,8 @@
 import { Playfair_Display, Nunito_Sans } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/NavBar";
+import Footer from "@/components/Footer";
+import PageLoader from "@/components/PageLoader";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -32,10 +34,12 @@ export default function RootLayout({ children }) {
       <body
         className={`${playfair.variable} ${nunito.variable} min-h-screen flex flex-col`}
       >
+        <PageLoader />
         <header className="absolute top-0 left-0 right-0 z-50">
           <Navbar />
         </header>
         {children}
+        <Footer />
       </body>
     </html>
   );

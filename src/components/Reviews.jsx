@@ -32,6 +32,30 @@ const REVIEWS = [
     quote:
       "If you only eat one restaurant dish this year, make it one of Mien Tay’s starters.",
   },
+  {
+    source: "Cool Places",
+    logo: "/cool-place.png",
+    quote:
+      "Eating Vietnamese is an essential Shoreditch and Hackney experience (Kingsland Road has been rechristened ‘Pho Road’ for the huge number of basic and refreshingly cheap Vietnamese noodle restaurants) and Mien Tay is one of the best places to do it, serving authentic and beautifully presented south Vietnamese cuisine. ",
+  },
+  {
+    source: "The Nudge",
+    logo: "/nudge.png",
+    quote:
+      "The perennially popular Mien Tay is a family-run spot serving generous portions of spice-laced curries (served in clay pots) as well as more adventurous dishes including stir-fried frogs legs",
+  },
+  {
+    source: "Made in Shoreditch Magazine",
+    logo: "/made-in-shoreditch.png",
+    quote:
+      "Mien Tay is where you go for no-frills, flavour-packed Vietnamese food. Their garlic butter prawns are legendary, and their beef pho is as authentic as it gets. Run by a Vietnamese family, this spot feels like a proper home-cooked meal—if your family happened to be incredible chefs.",
+  },
+  {
+    source: "Hoxton Radio",
+    logo: "/hoxton-radio.png",
+    quote:
+      "At Mien Tay on Kingsland Road I was more than happy to let someone else order, my head spinning from an afternoon of drinking. Nothing at Mien Tay could be faulted, even the tofu pancake was good. Soft shell crab in a spicy batter, fried quail with a spicy dusting, summer rolls with a spicy dip.",
+  },
 ];
 
 export default function ReviewsSlider() {
@@ -73,7 +97,7 @@ export default function ReviewsSlider() {
         {/* Card */}
         <div
           key={index}
-          className="mx-auto flex min-h-45 max-w-2xl flex-col justify-center rounded-3xl border p-6 text-center shadow-sm transition-opacity duration-500 md:min-h-55 md:p-8"
+          className="mx-auto flex min-h-65 max-w-2xl flex-col justify-center rounded-3xl border p-6 text-center shadow-sm transition-opacity duration-500 md:min-h-75 md:p-8"
           style={{
             backgroundColor: "rgba(255,255,255,0.75)",
             borderColor: "rgba(0,0,0,0.08)",
