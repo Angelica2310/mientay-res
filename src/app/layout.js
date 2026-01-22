@@ -1,8 +1,10 @@
 import { Playfair_Display, Nunito_Sans } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/NavBar";
 import Footer from "@/components/Footer";
 import PageLoader from "@/components/PageLoader";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const playfair = Playfair_Display({
   variable: "--font-playfair",
@@ -34,12 +36,45 @@ export default function RootLayout({ children }) {
       <body
         className={`${playfair.variable} ${nunito.variable} min-h-screen flex flex-col`}
       >
+        <Script id="mt-ssr-loader-guard" strategy="beforeInteractive">{`
+          try {
+            if (window.sessionStorage.getItem("mt_loader_shown")) {
+              const el = document.getElementById("mt-ssr-loader");
+              if (el) el.style.display = "none";
+            }
+          } catch (_) {}
+        `}</Script>
+        <div
+          id="mt-ssr-loader"
+          className="fixed inset-0 z-[70] flex items-center justify-center"
+        >
+          <div className="absolute inset-0">
+            <img
+              src="/loading-image.jpg"
+              alt="Mien Tay interior"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-black/45" />
+            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
+          </div>
+          <div className="relative flex flex-col items-center gap-3">
+            <img
+              src="/logo.png"
+              alt="Mien Tay"
+              className="h-14 w-auto drop-shadow-[0_6px_18px_rgba(0,0,0,0.45)]"
+            />
+            <p className="text-xs tracking-[0.22em] text-white/80 uppercase">
+              Shoreditch
+            </p>
+          </div>
+        </div>
         <PageLoader />
         <header className="absolute top-0 left-0 right-0 z-50">
           <Navbar />
         </header>
         {children}
         <Footer />
+        <ScrollToTop />
       </body>
     </html>
   );

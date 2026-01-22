@@ -11,6 +11,9 @@ export default function PageLoader() {
     const key = "mt_loader_shown";
     if (typeof window === "undefined") return;
 
+    const ssrLoader = document.getElementById("mt-ssr-loader");
+    if (ssrLoader) ssrLoader.remove();
+
     if (window.sessionStorage.getItem(key)) {
       setVisible(false);
       return;
@@ -54,7 +57,7 @@ export default function PageLoader() {
   return (
     <div
       className={[
-        "fixed inset-0 z-[60] flex items-center justify-center",
+        "fixed inset-0 z-60 flex items-center justify-center",
         "transition-opacity duration-300",
         leaving ? "opacity-0" : "opacity-100",
       ].join(" ")}
@@ -68,7 +71,7 @@ export default function PageLoader() {
         />
         {/* Darken + soften edges for readability */}
         <div className="absolute inset-0 bg-black/45" />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
+        <div className="absolute inset-0 bg-linear-to-b from-black/30 via-transparent to-black/40" />
       </div>
 
       {/* Card */}

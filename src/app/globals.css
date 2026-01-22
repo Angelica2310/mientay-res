@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "mapbox-gl/dist/mapbox-gl.css";
 
 @tailwind base;
 @tailwind components;
@@ -7,9 +8,9 @@
 :root {
   --background: #efe7db; /* main page background */
   --surface: #ffffff; /* cards, menu panels */
-  --primary: #1f4f3a; /* buttons, headings */
+  --primary: rgb(31, 79, 58); /* buttons, headings */
   --textMain: #2b2b2b; /* body text */
-  --accent: #e6c65c; /* hover, highlights */
+  --accent: rgb(230, 198, 92); /* hover, highlights */
 }
 
 body {
@@ -34,9 +35,11 @@ body {
   button,
   [role="button"],
   a[class] {
-    display: inline-flex;
+    /* display: inline-flex; */
     align-items: center;
-    transition: transform 150ms ease, box-shadow 150ms ease;
+    transition:
+      transform 150ms ease,
+      box-shadow 150ms ease;
     will-change: transform;
   }
 

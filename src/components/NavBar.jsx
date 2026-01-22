@@ -8,7 +8,6 @@ import Image from "next/image";
 const NAV_ITEMS = [
   { label: "Home", href: "/" },
   { label: "Menu", href: "/menu" },
-  { label: "About", href: "/about" },
   { label: "Gallery", href: "/gallery" },
   { label: "Private Dining", href: "/private-dining" },
   { label: "Contact", href: "/contact" },
@@ -31,6 +30,7 @@ export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
   const [deliveryOpen, setDeliveryOpen] = useState(false);
   const deliveryUrl =
     "https://deliveroo.co.uk/menu/london/haggerston/mien-tay-kingsland-road?utm_medium=affiliate&utm_source=google_maps_link&fulfillment_type=DELIVERY";
@@ -57,7 +57,23 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 768px)");
+    const onChange = () => setIsDesktop(media.matches);
+    onChange();
+    media.addEventListener("change", onChange);
+    return () => media.removeEventListener("change", onChange);
+  }, []);
+
   const items = useMemo(() => NAV_ITEMS, []);
+  const mobileScrolled = scrolled && !isDesktop;
+  const showScrollBg = mobileScrolled;
+  const isAltLogoRoute = [
+    "/contact",
+    "/menu",
+    "/gallery",
+    "/private-dining",
+  ].some((route) => pathname?.startsWith(route));
 
   const isActive = (href) => {
     if (href === "/") return pathname === "/";
@@ -70,20 +86,30 @@ export default function Navbar() {
       <div
         className="transition-colors duration-200"
         style={{
-          backgroundColor: scrolled ? "rgba(255,255,255,0.72)" : "transparent",
-          borderColor: scrolled ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.18)",
-          backdropFilter: scrolled ? "blur(10px)" : "none",
+          backgroundColor: showScrollBg
+            ? "rgba(255,255,255,0.72)"
+            : "transparent",
+          borderColor: showScrollBg
+            ? "rgba(0,0,0,0.08)"
+            : "rgba(255,255,255,0.18)",
+          backdropFilter: showScrollBg ? "blur(10px)" : "none",
         }}
       >
         <nav className="mx-auto flex max-w-6xl items-center px-4 py-3 md:px-6">
           {/* Left: Logo */}
-          <div className="inline-flex items-center rounded-2xl px-3 py-2">
+          <Link
+            href="/"
+            className="inline-flex items-center rounded-2xl px-3 py-2"
+            aria-label="Go to home page"
+          >
             <img
-              src={scrolled ? "/logo1.png" : "/logo.png"}
+              src={
+                isAltLogoRoute || mobileScrolled ? "/logo1.png" : "/logo.png"
+              }
               alt="Mien Tay Vietnamese Kitchen"
               className="h-18 w-auto md:h-30"
             />
-          </div>
+          </Link>
 
           {/* Middle: Mobile items (even spacing) */}
           <div className="ml-auto flex md:hidden">
@@ -94,21 +120,10 @@ export default function Navbar() {
                   <Link
                     key={item.href}
                     href={item.href}
-                    className="rounded-full px-3 py-1.5 text-sm font-semibold transition"
-                    style={{
-                      backgroundColor: active
-                        ? "rgba(31,79,58,0.22)"
-                        : scrolled
-                          ? "rgba(31,79,58,0.16)"
-                          : "rgba(255,255,255,0.12)",
-                      border: scrolled
-                        ? "1px solid rgba(31,79,58,0.22)"
-                        : "1px solid rgba(255,255,255,0.18)",
-                      color: scrolled
-                        ? "var(--textMain)"
-                        : "rgba(255,255,255,0.92)",
-                      backdropFilter: "blur(8px)",
-                    }}
+                    className={cx(
+                      "rounded-full border border-black/10 bg-(--primary)/10 px-3 py-1.5 text-sm font-semibold shadow-sm backdrop-blur-md transition",
+                      isAltLogoRoute ? "text-black" : "text-white",
+                    )}
                   >
                     {item.label}
                   </Link>
@@ -197,19 +212,10 @@ export default function Navbar() {
 
               <button
                 type="button"
-                className="inline-flex items-center justify-center rounded-xl border p-2"
-                style={{
-                  backgroundColor: scrolled
-                    ? "rgba(31,79,58,0.16)"
-                    : "rgba(255,255,255,0.12)",
-                  border: scrolled
-                    ? "1px solid rgba(31,79,58,0.22)"
-                    : "1px solid rgba(255,255,255,0.18)",
-                  color: scrolled
-                    ? "var(--textMain)"
-                    : "rgba(255,255,255,0.92)",
-                  backdropFilter: "blur(8px)",
-                }}
+                className={cx(
+                  "inline-flex items-center justify-center rounded-xl border border-black/10 bg-(--primary)/10 p-2 shadow-sm backdrop-blur-md",
+                  isAltLogoRoute ? "text-black" : "text-white",
+                )}
                 aria-label={open ? "Close menu" : "Open menu"}
                 aria-expanded={open}
                 onClick={() => setOpen((v) => !v)}
@@ -243,17 +249,10 @@ export default function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="rounded-full px-3 py-1.5 text-sm font-semibold transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0 active:scale-95"
-                  style={{
-                    backgroundColor: active
-                      ? "rgba(255,255,255,0.22)"
-                      : "rgba(255,255,255,0.12)",
-                    border: "1px solid rgba(255,255,255,0.18)",
-                    color: scrolled
-                      ? "var(--textMain)"
-                      : "rgba(255,255,255,0.92)",
-                    backdropFilter: "blur(8px)",
-                  }}
+                  className={cx(
+                    "rounded-full border border-black/10 bg-white/30 px-3 py-1.5 text-sm font-semibold shadow-sm backdrop-blur-md transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0 active:scale-95",
+                    isAltLogoRoute ? "text-black" : "text-white",
+                  )}
                 >
                   {item.label}
                 </Link>
@@ -274,7 +273,7 @@ export default function Navbar() {
             className="rounded-full px-4 py-2 text-sm font-semibold transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 cursor-pointer"
             style={{
               backgroundColor: "var(--accent)",
-              color: "#1b1b1b",
+              color: "#000",
             }}
             onClick={() => setDeliveryOpen((v) => !v)}
             aria-expanded={deliveryOpen}
@@ -381,12 +380,9 @@ export default function Navbar() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      className="block rounded-xl px-4 py-3 text-base font-medium transition"
+                      className="block rounded-xl px-4 py-3 text-base font-medium transition hover:bg-[rgba(230,198,92,0.75)] active:bg-[rgba(230,198,92,0.75)]"
                       style={{
                         color: "var(--textMain)",
-                        backgroundColor: active
-                          ? "rgba(230,198,92,0.75)"
-                          : "transparent",
                       }}
                     >
                       {item.label}
