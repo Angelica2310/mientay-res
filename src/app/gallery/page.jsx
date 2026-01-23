@@ -10,7 +10,7 @@ const images = Array.from({ length: 9 }, (_, i) => ({
 
 export default function GalleryPage() {
   return (
-    <main className="min-h-screen bg-(--background) px-4 mt-15 md:mt-27">
+    <main className="min-h-screen bg-(--background) px-4 mt-30">
       {/* Header */}
       <section className="relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-6 pt-12 pb-10">
@@ -23,17 +23,10 @@ export default function GalleryPage() {
           </div>
 
           <h1 className="mt-6 text-4xl md:text-6xl font-light leading-[1.05] ">
-            Gallery
-            <span className="relative ml-2">
-              <span className="relative z-10">moments</span>
-              <span
-                className="absolute -bottom-2 left-0 h-[10px] w-full -skew-x-6 opacity-25"
-                style={{ background: "var(--primary)" }}
-              />
-            </span>
+            Gallery moments
           </h1>
 
-          <p className="mt-7 md:mt-10 max-w-2xl text-md md:text-xl opacity-90">
+          <p className="mt-4 md:mt-10 max-w-2xl text-md md:text-xl opacity-90">
             A glimpse into our food, space, and moments at Mien Tay — where
             authentic Vietnamese comfort meets a warm, modern atmosphere.
           </p>

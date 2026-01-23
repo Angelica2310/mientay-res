@@ -30,7 +30,7 @@ const BulletList = ({ items }) => (
 
 export default function PrivateDiningPage() {
   return (
-    <main className="min-h-screen bg-(--background) px-4 py-32 md:py-44">
+    <main className="min-h-screen bg-(--background) px-4 mt-40">
       <div className="mx-auto max-w-6xl">
         {/* Hero */}
         <section className="relative overflow-hidden rounded-3xl border border-black/10 bg-white/30 p-6 shadow-sm backdrop-blur-md sm:p-12 md:p-7">

@@ -206,7 +206,7 @@ export default function BookPage() {
   }
 
   return (
-    <main className="min-h-screen bg-(--background) px-4 py-24 md:py-36">
+    <main className="min-h-screen bg-(--background) px-4 mt-40">
       <div className="mx-auto max-w-6xl">
         {/* HERO */}
         <section className="relative overflow-hidden rounded-3xl border border-black/10 bg-white/25 p-7 shadow-sm backdrop-blur-md sm:p-12">
@@ -498,7 +498,7 @@ export default function BookPage() {
 
             {/* Success/Error overlay */}
             {message ? (
-              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/25 p-4">
+              <div className="fixed inset-0 z-50 flex items-end justify-center bg-black/25 p-4 pb-24 md:items-center md:pb-4">
                 <div className="w-full max-w-md rounded-3xl border border-black/10 bg-white/75 p-6 text-center shadow-lg backdrop-blur-md">
                   <div className="mx-auto mb-3 inline-flex h-12 w-12 items-center justify-center rounded-2xl border border-black/10 bg-white/70">
                     <Sparkles className="h-6 w-6 text-(--primary)" />

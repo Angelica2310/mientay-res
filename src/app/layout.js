@@ -46,18 +46,25 @@ export default function RootLayout({ children }) {
               className="h-full w-full object-cover"
             />
             <div className="absolute inset-0 bg-black/45" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/40" />
+            <div className="absolute inset-0 bg-linear-to-b from-black/30 via-transparent to-black/40" />
           </div>
-          <div className="relative flex flex-col items-center gap-3">
-            <img
-              src="/logo.png"
-              alt="Mien Tay"
-              className="h-14 w-auto drop-shadow-[0_6px_18px_rgba(0,0,0,0.45)]"
-            />
-            <p className="text-xs tracking-[0.22em] text-white/80 uppercase">
-              Shoreditch
-            </p>
-            <div className="loader" />
+          <div className="relative w-[320px] max-w-[92vw] rounded-3xl border border-white/20 bg-white/14 px-7 py-7 shadow-2xl backdrop-blur-2xl">
+            <div className="flex flex-col items-center gap-4">
+              <div className="flex flex-col items-center">
+                <img
+                  src="/logo.png"
+                  alt="Mien Tay"
+                  className="h-14 w-auto drop-shadow-[0_6px_18px_rgba(0,0,0,0.45)]"
+                />
+                <p className="mt-2 text-xs tracking-[0.22em] text-white/80 uppercase">
+                  Shoreditch
+                </p>
+              </div>
+              <p className="text-sm font-medium text-white/90">
+                Preparing your table…
+              </p>
+              <div className="loader" />
+            </div>
           </div>
         </div>
         <PageLoader />

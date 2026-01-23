@@ -86,22 +86,17 @@ export default function Footer({
                     </Link>
                   </li>
                   <li>
-                    <Link className={linkClass} href="/reserve">
-                      Reservations
+                    <Link className={linkClass} href="/book">
+                      Reservations & Booking Policies
                     </Link>
                   </li>
-                  <li>
-                    <Link className={linkClass} href="/policies">
-                      Booking Policies
-                    </Link>
-                  </li>
-                </ul>
-                <ul className="space-y-2">
                   <li>
                     <Link className={linkClass} href="/gallery">
                       Gallery
                     </Link>
                   </li>
+                </ul>
+                <ul className="space-y-2">
                   <li>
                     <Link className={linkClass} href="/private-dining">
                       Events & Private Dining
@@ -140,13 +135,13 @@ export default function Footer({
                   )}
 
                   <li>
-                    <Link className={linkClass} href="/privacy">
-                      Privacy
+                    <Link className={linkClass} href="/terms">
+                      Terms & Conditions
                     </Link>
                   </li>
                   <li>
-                    <Link className={linkClass} href="/terms">
-                      Terms
+                    <Link className={linkClass} href="/privacy">
+                      Privacy Policies
                     </Link>
                   </li>
                 </ul>

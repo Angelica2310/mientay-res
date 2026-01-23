@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function ContactPage() {
   return (
-    <main className="bg-(--background)  mt-5 md:mt-15">
+    <main className="bg-(--background)  mt-15">
       {/* Fancy header */}
       <section className="relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-6 pt-24 pb-14">
@@ -15,17 +15,7 @@ export default function ContactPage() {
           </div>
 
           <h1 className="mt-6 text-4xl md:text-6xl font-light leading-[1.05]">
-            <span className="relative mr-1">
-              <span className="relative z-10">Let's</span>
-            </span>
-            plan your next
-            <span className="relative ml-2">
-              <span className="relative z-10">meal</span>
-              <span
-                className="absolute -bottom-2 left-0 h-[10px] w-full -skew-x-6 opacity-25"
-                style={{ background: "var(--primary)" }}
-              />
-            </span>
+            Let's plan your next meal
           </h1>
 
           <p className="mt-5 max-w-2xl text-md md:text-xl opacity-90">
@@ -45,13 +35,27 @@ export default function ContactPage() {
               <Card
                 title="Call"
                 subtitle="For same-day enquiries"
-                value="+44 (0)20 7739 3841"
+                value={
+                  <a
+                    href="tel:+442077393841"
+                    className="hover:opacity-80 transition"
+                  >
+                    +44 (0)20 7739 3841
+                  </a>
+                }
                 icon={<PhoneIcon />}
               />
               <Card
                 title="Email"
                 subtitle="Bookings & events"
-                value="ivythien02@gmail.com"
+                value={
+                  <a
+                    href="mailto:ivythien02@gmail.com"
+                    className="hover:opacity-80 transition"
+                  >
+                    ivythien02@gmail.com
+                  </a>
+                }
                 icon={<MailIcon />}
               />
             </div>
@@ -127,7 +131,7 @@ export default function ContactPage() {
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 <ActionButton href="tel:+442077393841" label="Call now" />
                 <ActionButton
-                  href="ivythien02@gmail.com"
+                  href="mailto:ivythien02@gmail.com"
                   label="Email us"
                   variant="outline"
                 />

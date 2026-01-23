@@ -75,6 +75,14 @@ export default function Navbar() {
     "/private-dining",
     "/book",
   ].some((route) => pathname?.startsWith(route));
+  const isPolicyRoute = ["/terms", "/privacy"].some((route) =>
+    pathname?.startsWith(route),
+  );
+  const useDarkDesktopText = isAltLogoRoute || isPolicyRoute;
+  const useDarkMobileText =
+    mobileScrolled || isAltLogoRoute || (isPolicyRoute && !isDesktop);
+  const useAltLogo =
+    isAltLogoRoute || mobileScrolled || isPolicyRoute;
 
   const isActive = (href) => {
     if (href === "/") return pathname === "/";
@@ -104,9 +112,7 @@ export default function Navbar() {
             aria-label="Go to home page"
           >
             <img
-              src={
-                isAltLogoRoute || mobileScrolled ? "/logo1.png" : "/logo.png"
-              }
+              src={useAltLogo ? "/logo1.png" : "/logo.png"}
               alt="Mien Tay Vietnamese Kitchen"
               className="h-18 w-auto md:h-30"
             />
@@ -123,9 +129,7 @@ export default function Navbar() {
                     href={item.href}
                     className={cx(
                       "rounded-full border border-black/10 bg-(--primary)/10 px-3 py-1.5 text-sm font-semibold shadow-sm backdrop-blur-md transition",
-                      mobileScrolled || isAltLogoRoute
-                        ? "text-black"
-                        : "text-white",
+                      useDarkMobileText ? "text-black" : "text-white",
                     )}
                   >
                     {item.label}
@@ -220,9 +224,7 @@ export default function Navbar() {
                 type="button"
                 className={cx(
                   "inline-flex items-center justify-center rounded-xl border border-black/10 bg-(--primary)/10 p-2 shadow-sm backdrop-blur-md",
-                  mobileScrolled || isAltLogoRoute
-                    ? "text-black"
-                    : "text-white",
+                  useDarkMobileText ? "text-black" : "text-white",
                 )}
                 aria-label={open ? "Close menu" : "Open menu"}
                 aria-expanded={open}
@@ -259,7 +261,7 @@ export default function Navbar() {
                   href={item.href}
                   className={cx(
                     "rounded-full border border-black/10 bg-white/30 px-3 py-1.5 text-sm font-semibold shadow-sm backdrop-blur-md transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0 active:scale-95",
-                    isAltLogoRoute ? "text-black" : "text-white",
+                    useDarkDesktopText ? "text-black" : "text-white",
                   )}
                 >
                   {item.label}
