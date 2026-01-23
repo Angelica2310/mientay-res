@@ -122,7 +122,9 @@ export default function Navbar() {
                     href={item.href}
                     className={cx(
                       "rounded-full border border-black/10 bg-(--primary)/10 px-3 py-1.5 text-sm font-semibold shadow-sm backdrop-blur-md transition",
-                      isAltLogoRoute ? "text-black" : "text-white",
+                      mobileScrolled || isAltLogoRoute
+                        ? "text-black"
+                        : "text-white",
                     )}
                   >
                     {item.label}
@@ -133,7 +135,10 @@ export default function Navbar() {
               <div className="relative">
                 <button
                   type="button"
-                  className="rounded-full px-3 py-1.5 text-sm font-semibold transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 cursor-pointer"
+                  className={cx(
+                    "rounded-full px-3 py-1.5 text-sm font-semibold transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0 active:scale-95 cursor-pointer,",
+                    isAltLogoRoute ? "text-black" : "",
+                  )}
                   style={{
                     backgroundColor: "var(--primary)",
                     color: "#fff",
@@ -214,7 +219,7 @@ export default function Navbar() {
                 type="button"
                 className={cx(
                   "inline-flex items-center justify-center rounded-xl border border-black/10 bg-(--primary)/10 p-2 shadow-sm backdrop-blur-md",
-                  isAltLogoRoute ? "text-black" : "text-white",
+                  mobileScrolled || isAltLogoRoute ? "text-black" : "text-white",
                 )}
                 aria-label={open ? "Close menu" : "Open menu"}
                 aria-expanded={open}

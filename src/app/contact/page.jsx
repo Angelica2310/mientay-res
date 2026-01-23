@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function ContactPage() {
   return (
-    <main className="bg-(--background) text-black mt-5 md:mt-15">
+    <main className="bg-(--background)  mt-5 md:mt-15">
       {/* Fancy header */}
       <section className="relative overflow-hidden">
         <div className="max-w-6xl mx-auto px-6 pt-24 pb-14">
@@ -15,7 +15,10 @@ export default function ContactPage() {
           </div>
 
           <h1 className="mt-6 text-4xl md:text-6xl font-light leading-[1.05]">
-            Let’s plan your next
+            <span className="relative mr-1">
+              <span className="relative z-10">Let's</span>
+            </span>
+            plan your next
             <span className="relative ml-2">
               <span className="relative z-10">meal</span>
               <span
@@ -25,7 +28,7 @@ export default function ContactPage() {
             </span>
           </h1>
 
-          <p className="mt-5 max-w-2xl text-lg md:text-xl opacity-90">
+          <p className="mt-5 max-w-2xl text-md md:text-xl opacity-90">
             From casual dinners to group celebrations and private events — reach
             out and we’ll make it easy.
           </p>
@@ -218,7 +221,7 @@ function Card({ title, subtitle, value, icon }) {
 
 function ActionButton({ href, label, variant = "solid" }) {
   const solid =
-    "bg-[var(--primary)] text-white hover:opacity-95 border-transparent";
+    "bg-[var(--primary)] text-white hover:opacity-95 border-transparent hover:opacity-90";
   const outline =
     "bg-transparent text-[var(--textMain)] border-[var(--textMain)]/25 hover:bg-white/10";
 

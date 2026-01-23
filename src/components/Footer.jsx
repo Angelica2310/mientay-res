@@ -110,7 +110,7 @@ export default function Footer({
 
                   <li>
                     <Link className={linkClass} href="/contact">
-                      Enquiries
+                      Contact
                     </Link>
                   </li>
                 </ul>
