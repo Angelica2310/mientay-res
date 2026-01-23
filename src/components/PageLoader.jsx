@@ -10,7 +10,10 @@ export default function PageLoader() {
     if (typeof window === "undefined") return;
 
     const ssrLoader = document.getElementById("mt-ssr-loader");
-    if (ssrLoader) ssrLoader.remove();
+    if (ssrLoader) {
+      ssrLoader.style.display = "none";
+      ssrLoader.setAttribute("aria-hidden", "true");
+    }
 
     setLeaving(false);
 
