@@ -163,7 +163,7 @@ export default function HeroSlideshow() {
                 </Link>
 
                 <Link
-                  href="/reservations"
+                  href="/book"
                   className="rounded-xl border px-5 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
                   style={{
                     borderColor: "rgba(255,255,255,0.25)",

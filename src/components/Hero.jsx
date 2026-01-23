@@ -197,7 +197,7 @@ export default function Hero() {
               </Link>
 
               <Link
-                href="/reservations"
+                href="/book"
                 className="rounded-xl px-5 py-3 text-sm font-semibold transition"
                 style={{
                   backgroundColor: "rgba(230,198,92,0.25)",

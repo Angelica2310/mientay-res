@@ -73,6 +73,7 @@ export default function Navbar() {
     "/menu",
     "/gallery",
     "/private-dining",
+    "/book",
   ].some((route) => pathname?.startsWith(route));
 
   const isActive = (href) => {
@@ -219,7 +220,9 @@ export default function Navbar() {
                 type="button"
                 className={cx(
                   "inline-flex items-center justify-center rounded-xl border border-black/10 bg-(--primary)/10 p-2 shadow-sm backdrop-blur-md",
-                  mobileScrolled || isAltLogoRoute ? "text-black" : "text-white",
+                  mobileScrolled || isAltLogoRoute
+                    ? "text-black"
+                    : "text-white",
                 )}
                 aria-label={open ? "Close menu" : "Open menu"}
                 aria-expanded={open}
@@ -353,7 +356,7 @@ export default function Navbar() {
         </div>
 
         <Link
-          href="/reservations"
+          href="/book"
           className="rounded-full px-4 py-2 text-sm font-semibold transition-transform duration-150 hover:-translate-y-0.5 active:translate-y-0 active:scale-95"
           style={{ backgroundColor: "var(--primary)", color: "#fff" }}
         >
