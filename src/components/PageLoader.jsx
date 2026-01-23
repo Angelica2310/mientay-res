@@ -5,40 +5,17 @@ import { useEffect, useState } from "react";
 export default function PageLoader() {
   const [visible, setVisible] = useState(true);
   const [leaving, setLeaving] = useState(false);
-  const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const key = "mt_loader_shown";
     if (typeof window === "undefined") return;
 
     const ssrLoader = document.getElementById("mt-ssr-loader");
     if (ssrLoader) ssrLoader.remove();
 
-    if (window.sessionStorage.getItem(key)) {
-      setVisible(false);
-      return;
-    }
-    window.sessionStorage.setItem(key, "true");
-
     setLeaving(false);
-    setProgress(0);
 
     // Slightly shorter feels more premium (less "waiting")
     const durationMs = 3200;
-    const startTime = Date.now();
-
-    const interval = window.setInterval(() => {
-      const elapsed = Date.now() - startTime;
-
-      // Eased progress so it feels smoother than linear
-      const t = Math.min(1, elapsed / durationMs);
-      const eased = 1 - Math.pow(1 - t, 3); // easeOutCubic
-      const nextValue = Math.min(100, Math.round(eased * 100));
-
-      setProgress(nextValue);
-
-      if (nextValue >= 100) window.clearInterval(interval);
-    }, 60);
 
     const timeout = window.setTimeout(() => {
       // fade out first, then unmount
@@ -48,7 +25,6 @@ export default function PageLoader() {
 
     return () => {
       window.clearTimeout(timeout);
-      window.clearInterval(interval);
     };
   }, []);
 
@@ -103,13 +79,7 @@ export default function PageLoader() {
             Preparing your table…
           </p>
 
-          {/* Progress bar (no % text) */}
-          <div className="h-1.5 w-52 overflow-hidden rounded-full bg-white/25">
-            <div
-              className="h-full rounded-full bg-white/85 transition-[width] duration-100"
-              style={{ width: `${progress}%` }}
-            />
-          </div>
+          <div className="loader" />
         </div>
       </div>
     </div>

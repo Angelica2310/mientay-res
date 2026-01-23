@@ -1,5 +1,4 @@
 import { Playfair_Display, Nunito_Sans } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 import Navbar from "@/components/NavBar";
 import Footer from "@/components/Footer";
@@ -36,14 +35,6 @@ export default function RootLayout({ children }) {
       <body
         className={`${playfair.variable} ${nunito.variable} min-h-screen flex flex-col`}
       >
-        <Script id="mt-ssr-loader-guard" strategy="beforeInteractive">{`
-          try {
-            if (window.sessionStorage.getItem("mt_loader_shown")) {
-              const el = document.getElementById("mt-ssr-loader");
-              if (el) el.style.display = "none";
-            }
-          } catch (_) {}
-        `}</Script>
         <div
           id="mt-ssr-loader"
           className="fixed inset-0 z-[70] flex items-center justify-center"
@@ -66,6 +57,7 @@ export default function RootLayout({ children }) {
             <p className="text-xs tracking-[0.22em] text-white/80 uppercase">
               Shoreditch
             </p>
+            <div className="loader" />
           </div>
         </div>
         <PageLoader />

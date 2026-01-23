@@ -31,6 +31,37 @@ body {
   }
 }
 
+.loader {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  display: inline-block;
+  animation: l5 1s infinite linear alternate;
+}
+
+@keyframes l5 {
+  0% {
+    box-shadow: 20px 0 rgba(255, 255, 255, 0.95),
+      -20px 0 rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.95);
+  }
+  33% {
+    box-shadow: 20px 0 rgba(255, 255, 255, 0.95),
+      -20px 0 rgba(255, 255, 255, 0.25);
+    background: rgba(255, 255, 255, 0.25);
+  }
+  66% {
+    box-shadow: 20px 0 rgba(255, 255, 255, 0.25),
+      -20px 0 rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.25);
+  }
+  100% {
+    box-shadow: 20px 0 rgba(255, 255, 255, 0.25),
+      -20px 0 rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 0.95);
+  }
+}
+
 @layer base {
   button,
   [role="button"],
